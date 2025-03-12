@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Travel - Your Gateway to Adventure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --black: #121212;
+            --accent: #e63946;
+            --gold: #ffd700;
+            --teal: #00b4d8;
+            --darkgrey: #2d3436;
+            --lightgrey: #a0a0a0;
+            --offwhite: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--offwhite);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--offwhite);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--offwhite);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .search-bar {
+            display: flex;
+            margin-left: 20px;
+        }
+
+        .search-bar input {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            background-color: var(--darkgrey);
+            color: var(--offwhite);
+            width: 200px;
+        }
+
+        .search-bar button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            background-color: var(--accent);
+            color: var(--offwhite);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/800') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--offwhite);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--lightgrey);
+        }
+
+        .accent-text {
+            color: var(--accent);
+        }
+
+        .gold-text {
+            color: var(--gold);
+        }
+
+        .teal-text {
+            color: var(--teal);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent);
+            color: var(--offwhite);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: transform 0.3s, background-color 0.3s;
+            margin: 10px;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            background-color: #d72638;
+        }
+
+        .cta-btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .cta-btn-secondary:hover {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        /* Deals Section */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: -10px;
+            left: 20%;
+        }
+
+        .deals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .deal-card {
+            background-color: var(--darkgrey);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .deal-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .deal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .deal-card:hover .deal-img img {
+            transform: scale(1.1);
+        }
+
+        .deal-price {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .deal-content {
+            padding: 20px;
+        }
+
+        .deal-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .deal-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--lightgrey);
+            font-size: 0.9rem;
+        }
+
+        .deal-rating {
+            color: var(--gold);
+        }
+
+        .deal-desc {
+            margin-bottom: 20px;
+        }
+
+        .deal-cta {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: var(--teal);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .deal-cta:hover {
+            background-color: #0096c7;
+        }
+
+        /* Popular Destinations */
+        .destinations {
+            background-color: #161616;
+        }
+
+        .dest-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .dest-card {
+            position: relative;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .dest-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .dest-card:hover .dest-img {
+            transform: scale(1.1);
+        }
+
+        .dest-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            transition: height 0.3s;
+        }
+
+        .dest-card:hover .dest-overlay {
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        }
+
+        .dest-name {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .dest-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .dest-price {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .dest-details {
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .dest-card:hover .dest-details {
+            height: auto;
+            opacity: 1;
+        }
+
+        /* Search Form */
+        .search-section {
+            background-color: var(--darkgrey);
+            padding: 50px 0;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--black);
+            color: var(--offwhite);
+        }
+
+        .search-submit {
+            padding: 12px 0;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            grid-column: 1 / -1;
+            transition: background-color 0.3s;
+        }
+
+        .search-submit:hover {
+            background-color: #d72638;
+        }
+
+        /* Services */
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--darkgrey);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: #161616;
+        }
+
+        .testimonial-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--darkgrey);
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .testimonial-content {
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-user {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .user-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .user-location {
+            color: var(--lightgrey);
+            font-size: 0.9rem;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--accent);
+            opacity: 0.2;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--accent);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .newsletter-form button {
+            padding: 12px 25px;
+            background-color: var(--black);
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--black);
+            padding: 80px 0 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--lightgrey);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--darkgrey);
+            border-radius: 50%;
+            color: var(--offwhite);
+            text-align: center;
+            line-height: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: var(--lightgrey);
+            font-size: 0.9rem;
+        }
+
+        /* Cars Section */
+        .cars-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .car-card {
+            background-color: var(--darkgrey);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .car-img {
+            height: 180px;
+            position: relative;
+        }
+
+        .car-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .car-type {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--black);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        .car-content {
+            padding: 20px;
+        }
+
+        .car-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .car-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--lightgrey);
+        }
+
+        .car-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .car-feature {
+            background-color: var(--black);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+
+        .car-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--teal);
+        }
+
+        .price-period {
+            font-size: 0.8rem;
+            color: var(--lightgrey);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+            }
+
+            .search-bar {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <h1>Horizon<span>Travel</span></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#deals">Deals</a></li>
+                <li><a href="#hotels">Hotels</a></li>
+                <li><a href="#cars">Cars</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" placeholder="Search destinations...">
+                <button>Search</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Discover <span class="accent-text">Your</span> Next <span class="gold-text">Adventure</span></h2>
+            <p>Explore the world's most stunning destinations with exclusive deals on flights, accommodations, and experiences. Your journey begins with Horizon Travel.</p>
+            <div>
+                <a href="#search" class="cta-btn">Plan Your Trip</a>
+                <a href="#deals" class="cta-btn cta-btn-secondary">View Special Offers</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Form Section -->
+    <section id="search" class="search-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Find Your <span class="accent-text">Perfect Trip</span></h2>
+            </div>
+            <form class="search-form">
+                <div class="form-group">
+                    <label>Destination</label>
+                    <select class="form-control">
+                        <option value="">Select Destination</option>
+                        <option value="paris">Paris, France</option>
+                        <option value="bali">Bali, Indonesia</option>
+                        <option value="tokyo">Tokyo, Japan</option>
+                        <option value="newyork">New York, USA</option>
+                        <option value="rio">Rio de Janeiro, Brazil</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Check In</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Check Out</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Travelers</label>
+                    <select class="form-control">
+                        <option value="1">1 Person</option>
+                        <option value="2">2 People</option>
+                        <option value="3">3 People</option>
+                        <option value="4">4 People</option>
+                        <option value="5+">5+ People</option>
+                    </select>
+                </div>
+                <button type="submit" class="search-submit">Search for Best Deals</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Deal Section -->
+    <section id="deals" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hot <span class="accent-text">Deals</span></h2>
+                <p>Exclusive offers for unforgettable experiences</p>
+            </div>
+            <div class="deals-container">
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="/api/placeholder/400/300" alt="Santorini">
+                        <div class="deal-price">$899</div>
+                    </div>
+                    <div class="deal-content">
+                        <h3>Santorini Dream Escape</h3>
+                        <div class="deal-meta">
+                            <span>7 days / 6 nights</span>
+                            <div class="deal-rating">★★★★★</div>
+                        </div>
+                        <p class="deal-desc">Experience the magic of Santorini with this all-inclusive package including flights, luxury accommodation, and a sunset cruise.</p>
+                        <a href="#" class="deal-cta">View Deal</a>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="/api/placeholder/400/300" alt="Bali">
+                        <div class="deal-price">$1,199</div>
+                    </div>
+                    <div class="deal-content">
+                        <h3>Bali Paradise Retreat</h3>
+                        <div class="deal-meta">
+                            <span>10 days / 9 nights</span>
+                            <div class="deal-rating">★★★★☆</div>
+                        </div>
+                        <p class="deal-desc">Discover the beauty of Bali with this package including villa stay, temple tours, and traditional spa treatments.</p>
+                        <a href="#" class="deal-cta">View Deal</a>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="/api/placeholder/400/300" alt="Tokyo">
+                        <div class="deal-price">$1,499</div>
+                    </div>
+                    <div class="deal-content">
+                        <h3>Tokyo Cultural Experience</h3>
+                        <div class="deal-meta">
+                            <span>8 days / 7 nights</span>
+                            <div class="deal-rating">★★★★★</div>
+                        </div>
+                        <p class="deal-desc">Immerse yourself in Japanese culture with this Tokyo package including guided tours, traditional ryokan stay, and food experiences.</p>
+                        <a href="#" class="deal-cta">View Deal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Destinations -->
+    <section id="destinations" class="section destinations">
+        <div class="container">
+            <div class="section-title">
+                <h2>Popular <span class="accent-text">Destinations</span></h2>
+                <p>Explore the world's most sought-after locations</p>
+            </div>
+            <div class="dest-container">
+                <div class="dest-card">
+                    <img src="/api/placeholder/400/300" alt="Paris" class="dest-img">
+                    <div class="dest-overlay">
+                        <h3 class="dest-name">Paris, France</h3>
+                        <div class="dest-info">
+                            <span>Europe</span>
+                            <span class="dest-price">From $599</span>
+                        </div>
+                        <div class="dest-details">
+                            <p>Experience the romance of the City of Light with iconic landmarks like the Eiffel Tower, Louvre Museum, and charming cafés.</p>
+                            <div class="dest-highlights">
+                                <p>✓ Direct flights available</p>
+                                <p>✓ Over 500 hotels to choose from</p>
+                                <p>✓ Guided tours included</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dest-card">
+                    <img src="/api/placeholder/400/300" alt="Maldives" class="dest-img">
+                    <div class="dest-overlay">
+                        <h3 class="dest-name">Maldives</h3>
+                        <div class="dest-info">
+                            <span>Asia</span>
+                            <span class="dest-price">From $1,299</span>
+                        </div>
+                        <div class="dest-details">
+                            <p>Relax in paradise with crystal clear waters, overwater bungalows, and pristine white sand beaches.</p>
+                            <div class="dest-highlights">
+                                <p>✓ Luxury resorts available</p>
+                                <p>✓ All-inclusive packages</p>
+                                <p>✓ Water sports included</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dest-card">
+                    <img src="/api/placeholder/400/300" alt="New York" class="dest-img">
+                    <div class="dest-overlay">
+                        <h3 class="dest-name">New York, USA</h3>
+                        <div class="dest-info">
+                            <span>North America</span>
+                            <span class="dest-price">From $799</span>
+                        </div>
+                        <div class="dest-details">
+                            <p>Experience the energy of the Big Apple with its iconic skyline, Broadway shows, and diverse neighborhoods.</p>
+                            <div class="dest-highlights">
+                                <p>✓ Multiple daily flights</p>
+                                <p>✓ City pass included</p>
+                                <p>✓ Broadway show tickets available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dest-card">
+                    <img src="/api/placeholder/400/300" alt="Cape Town" class="dest-img">
+                    <div class="dest-overlay">
+                        <h3 class="dest-name">Cape Town, South Africa</h3>
+                        <div class="dest-info">
+                            <span>Africa</span>
+                            <span class="dest-price">From $899</span>
+                        </div>
+                        <div class="dest-details">
+                            <p>Discover dramatic landscapes, wildlife, and rich culture in this stunning coastal city.</p>
+                            <div class="dest-highlights">
+                                <p>✓ Safari packages available</p>
+                                <p>✓ Table Mountain tours</p>
+                                <p>✓ Wine country excursions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hotels Section -->
+    <section id="hotels" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Luxury <span class="teal-text">Hotels</span></h2>
+                <p>Premium accommodations for your perfect stay</p>
+            </div>
+            <div class="deals-container">
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="/api/placeholder/400/300" alt="The Royal Palace">
+                        <div class="deal-price">$299/night</div>
+                    </div>
+                    <div class="deal-content">
+                        <h3>The Royal Palace, Dubai</h3>
+                        <div class="deal-meta">
+                            <span>5-star luxury</span>
+                            <div class="deal-rating">★★★★★</div>
+                        </div>
+                        <p class="deal-desc">Experience unparalleled luxury with panoramic views, private beach access, and world-class dining options.</p>
+                        <a href="#" class="deal-cta">Book Now</a>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="/api/placeholder/400/300" alt="Oceanview Resort">
+                        <div class="deal-price">$199/night</div>
+                    </div>
+                    <div class="deal-content">
+                        <h3>Oceanview Resort, Cancun</h3>
+                        
